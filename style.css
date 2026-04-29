@@ -1,0 +1,34 @@
+table { 
+  border-collapse: collapse;
+}
+tbody {
+  user-select: none;
+}
+tr:not(.letters) {
+  height: 75px;
+}
+td {
+  border: 1px solid black;
+  width: 75px;
+  text-align: center;
+  font-size: 48px;
+}
+th {
+  padding: 08px;
+}
+tr:nth-child(odd) td:nth-child(even) {
+  background-color: black;
+  color: white;
+}
+tr:nth-child(even) td:nth-child(odd) {
+  background-color: black;
+  color: white;
+}
+body {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.current {
+  background-color: cyan !important;
+}
