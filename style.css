@@ -29,7 +29,7 @@ body {
   gap: 16px;
   flex-wrap: wrap;
 }
-.current {
+.selected {
   background-color: cyan !important;
 }
 mark.cyan {

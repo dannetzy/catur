@@ -9,6 +9,9 @@ const pieces = {
 const board = document.querySelector('.board');
 let currentPiece = '';
 
+const BLACK = 1;
+const WHITE = 2;
+
 //initialize board
 const pieceRow = document.querySelectorAll('.pieces');
 const pawnRow = document.querySelectorAll('.pawns');
@@ -45,21 +48,28 @@ board.addEventListener('click', (ev) => {
   }
 
   const square = ev.target;
-  const current = document.querySelector('.current');
+  const selected = document.querySelector('.selected');
+  const currentPieceColor = checkPiece(currentPiece);
+  const selectedPieceColor = checkPiece(square.textContent);
 
-  if (current && square.classList.contains('current')) {
+  if (selected && square.classList.contains('selected')) {
     currentPiece = '';
-    current.classList.remove('current');
+    selected.classList.remove('selected');
     return;
   }
 
-  if (checkPiece(currentPiece)) {
+  if (currentPieceColor) {
+    if (selectedPieceColor === currentPieceColor) {
+      currentPiece = '';
+      selected.classList.remove('selected');
+      return;
+    }
     square.textContent = currentPiece;
     currentPiece = '';
-    current.textContent = '';
-    current.classList.remove('current');
-  } else if (checkPiece(square.textContent)) {
+    selected.textContent = '';
+    selected.classList.remove('selected');
+  } else if (selectedPieceColor) {
     currentPiece = square.textContent;
-    square.classList.add('current');
+    square.classList.add('selected');
   }
 });
