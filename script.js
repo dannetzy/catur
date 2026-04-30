@@ -1,21 +1,43 @@
 const pieces = {
-  rook: '♜',
-  knight: '♞',
-  bishop: '♝',
-  queen: '♛',
-  king: '♚',
-  pawn: '♟',
+  king: ['♚', '♔'],
+  queen: ['♛', '♕'],
+  rook: ['♜', '♖'],
+  bishop: ['♝', '♗'],
+  knight: ['♞', '♘'],
+  pawn: ['♟', '♙'],
 };
 const board = document.querySelector('.board');
 let currentPiece = '';
 
 //initialize board
-const pieceRow = document.querySelectorAll('.pieces td');
-const pawnRow = document.querySelectorAll('.pawns td');
-const rowOfPieces = [pieces.rook, pieces.knight, pieces.bishop, pieces.queen, pieces.king, pieces.bishop, pieces.knight, pieces.rook];
+const pieceRow = document.querySelectorAll('.pieces');
+const pawnRow = document.querySelectorAll('.pawns');
 
-pieceRow.forEach((td, i) => td.textContent = rowOfPieces[i >= rowOfPieces.length ? i-8 : i]);
-pawnRow.forEach(td => td.textContent = pieces.pawn);
+pieceRow.forEach((tr, i) => {
+  const rowOfPieces = [pieces.rook[i], pieces.knight[i], pieces.bishop[i], pieces.queen[i], pieces.king[i], pieces.bishop[i], pieces.knight[i], pieces.rook[i]];
+  const colSquares = [...tr.children].splice(1);
+  colSquares.forEach((td, i) => td.textContent = rowOfPieces[i]);
+});
+pawnRow.forEach((tr, i) => {
+  const colSquares = [...tr.children].splice(1);
+  colSquares.forEach(td => td.textContent = pieces.pawn[i]);
+});
+
+/**
+ * Checks a piece, duh.
+ * @param {String} thePiece The piece to be checked
+ * @returns 1 is black, 2 is white, undefined is unknown piece
+ */
+function checkPiece(thePiece) {
+  for (const piece in pieces) {
+    for (const [i, color] of pieces[piece].entries()) {
+      if (thePiece === color) {
+        return i+1;
+      }
+    }
+  }
+  return;
+}
 
 board.addEventListener('click', (ev) => {
   if (!ev.target.closest('td')) {
