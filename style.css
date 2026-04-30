@@ -32,3 +32,6 @@ body {
 .current {
   background-color: cyan !important;
 }
+mark.cyan {
+  background-color: cyan;
+}
