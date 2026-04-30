@@ -5,16 +5,16 @@ tbody {
   user-select: none;
 }
 tr:not(.letters) {
-  height: 75px;
+  height: min(11vw, 75px);
 }
 td {
   border: 1px solid black;
-  width: 75px;
+  width: min(11vw, 75px);
   text-align: center;
-  font-size: 48px;
+  font-size: min(7vw, 48px);
 }
 th {
-  padding: 8px;
+  padding: 4px;
 }
 tr:nth-child(odd) td:nth-child(even) {
   background-color: black;
