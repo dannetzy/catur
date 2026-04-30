@@ -24,7 +24,7 @@ pawnRow.forEach((tr, i) => {
 });
 
 /**
- * Checks a piece, duh.
+ * Checks whether a piece is included in `pieces` variable
  * @param {String} thePiece The piece to be checked
  * @returns 1 is black, 2 is white, undefined is unknown piece
  */
@@ -53,12 +53,12 @@ board.addEventListener('click', (ev) => {
     return;
   }
 
-  if (currentPiece !== '') {
+  if (checkPiece(currentPiece)) {
     square.textContent = currentPiece;
     currentPiece = '';
     current.textContent = '';
     current.classList.remove('current');
-  } else if (square.textContent !== '') {
+  } else if (checkPiece(square.textContent)) {
     currentPiece = square.textContent;
     square.classList.add('current');
   }
