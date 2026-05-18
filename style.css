@@ -8,7 +8,7 @@ tr:not(.letters) {
   height: min(11vw, 75px);
 }
 td {
-  border: 1px solid black;
+  border: 1px solid transparent;
   width: min(11vw, 75px);
   text-align: center;
   font-size: min(7vw, 48px);
@@ -18,11 +18,11 @@ th {
 }
 tr:nth-child(odd) td:nth-child(even),
 tr:nth-child(even) td:nth-child(odd) {
-  background-color: saddlebrown;
+  background-color: #555;
 }
 tr:nth-child(odd) td:nth-child(odd),
 tr:nth-child(even) td:nth-child(even) {
-  background-color: burlywood;
+  background-color: #aaa;
 }
 body {
   display: flex;
@@ -40,7 +40,7 @@ caption {
   font-size: large;
 }
 .black {
-  color: black;
+  color: #111;
 }
 .white {
   color: white;

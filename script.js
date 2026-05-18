@@ -47,11 +47,15 @@ function getPiece(square) {
   };
 }
 /**
- * Updates current piece global variable
+ * Updates current piece global variable. Pass nothing or falsy values to empty it.
  * @param {String} piece Piece
  * @param {String} color Color
  */
 function updateCurrent(piece, color) {
+  if (!piece || !color) {
+    current.piece = '';
+    current.color = '';
+  }
   current.piece = piece;
   current.color = color;
 }
@@ -85,20 +89,20 @@ board.addEventListener('click', (ev) => {
   const clicked = getPiece(square);
 
   if (selected && square.classList.contains('selected')) {
-    updateCurrent('', '');
+    updateCurrent();
     selected.classList.remove('selected');
     return;
   }
 
   if (current.color) {
     if (clicked.color && clicked.color === current.color) {
-      updateCurrent('', '');
+      updateCurrent();
       selected.classList.remove('selected');
       return;
     }
     updateSquare(square, current.piece, current.color);
-    updateCurrent('', '');
-    updateSquare(selected)
+    updateCurrent();
+    updateSquare(selected);
   } else if (clicked.color) {
     updateCurrent(clicked.piece, clicked.color);
     square.classList.add('selected');
