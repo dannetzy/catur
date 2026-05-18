@@ -4,10 +4,10 @@ table {
 tbody {
   user-select: none;
 }
-tr:not(.letters) {
+tbody tr {
   height: min(11vw, 75px);
 }
-td {
+tbody td {
   border: 1px solid black;
   width: min(11vw, 75px);
   text-align: center;
@@ -16,24 +16,21 @@ td {
 th {
   padding: 4px;
 }
-tr:nth-child(odd) td:nth-child(even),
-tr:nth-child(even) td:nth-child(odd) {
-  background-color: #aaa;
-}
-tr:nth-child(odd) td:nth-child(odd),
-tr:nth-child(even) td:nth-child(even) {
+tbody tr:nth-child(odd) td:nth-child(even),
+tbody tr:nth-child(even) td:nth-child(odd) {
   background-color: white;
+}
+tbody tr:nth-child(odd) td:nth-child(odd),
+tbody tr:nth-child(even) td:nth-child(even) {
+  background-color: #aaa;
 }
 body {
   display: flex;
   gap: 16px;
   flex-wrap: wrap;
 }
-.selected {
+.selected, .cyan {
   background-color: cyan !important;
-}
-mark.cyan {
-  background-color: cyan;
 }
 caption {
   font-weight: bold;

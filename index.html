@@ -10,8 +10,8 @@
 <body>
   <table>
     <caption>Chess from HTML Table</caption>
-    <tbody class="board">
-      <tr class="letters">
+    <thead>
+      <tr>
         <th></th>
         <th>A</th>
         <th>B</th>
@@ -22,7 +22,9 @@
         <th>G</th>
         <th>H</th>
       </tr>
-      <tr class="pieces black">
+    </thead>
+    <tbody class="board">
+      <tr class="pieces">
         <th>8</th>
         <td></td>
         <td></td>
@@ -33,7 +35,7 @@
         <td></td>
         <td></td>
       </tr>
-      <tr class="pawns black">
+      <tr class="pawns">
         <th>7</th>
         <td></td>
         <td></td>
@@ -88,7 +90,7 @@
         <td></td>
         <td></td>
       </tr>
-      <tr class="pawns white">
+      <tr class="pawns">
         <th>2</th>
         <td></td>
         <td></td>
@@ -99,7 +101,7 @@
         <td></td>
         <td></td>
       </tr>
-      <tr class="pieces white">
+      <tr class="pieces">
         <th>1</th>
         <td></td>
         <td></td>
@@ -123,6 +125,7 @@
     <ul>
       <li><s>Differentiate black and white pieces</s> (done)</li>
       <li>Basic system to highlight possible moves and reject invalid moves</li>
+      <li>Turn system</li>
     </ul>
     <hr>
     <p>Made by DanneTzy.</p>
