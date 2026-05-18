@@ -35,21 +35,6 @@ pawnRow.forEach((tr, i) => {
   tr.classList.remove(i ? 'white' : 'black');
 });
 
-// /**
-//  * Checks whether a piece is included in `pieces` variable
-//  * @param {String} thePiece The piece to be checked
-//  * @returns 1 is black, 2 is white, undefined is unknown piece
-//  */
-// function checkPiece(thePiece) {
-//   for (const piece in pieces) {
-//     for (const [i, color] of pieces[piece].entries()) {
-//       if (thePiece === color) {
-//         return i+1;
-//       }
-//     }
-//   }
-//   return;
-// }
 /**
  * Get piece info from a square
  * @param {HTMLElement} square The square to get
@@ -62,7 +47,7 @@ function getPiece(square) {
   };
 }
 /**
- * Update current piece
+ * Updates current piece global variable
  * @param {String} piece Piece
  * @param {String} color Color
  */
@@ -71,17 +56,19 @@ function updateCurrent(piece, color) {
   current.color = color;
 }
 /**
- * 
+ * Updates a square
  * @param {HTMLElement} square The square's element
  * @param {String} piece Piece class of the square's element, blank to empty out the element
  * @param {*} color Piece class of the square's element, blank to empty out the element
  */
 function updateSquare(square, piece, color) {
+  const squareClsList = [...square.classList];
+  // wipe classes regardless
+  for (const cls of squareClsList) { 
+    square.classList.remove(cls);
+  }
   if (!piece || !color) {
     square.textContent = '';
-    for (const cls of [...square.classList]) { 
-      square.classList.remove(cls);
-    }
     return;
   }
   square.textContent = pieces[piece];
