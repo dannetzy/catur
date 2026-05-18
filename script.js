@@ -7,10 +7,6 @@ const pieces = {
   pawn: '♟'
 };
 const board = document.querySelector('.board');
-var current = {
-  piece: '',
-  color: ''
-};
 
 //initialize board
 const pieceRow = document.querySelectorAll('.pieces');
@@ -38,32 +34,25 @@ pawnRow.forEach((tr, i) => {
  * @returns Object containing the piece's info, undefined for blank
  */
 function getPiece(square) {
+  if (!(square instanceof HTMLElement)) {
+    return {
+      piece: '',
+      color: ''
+    }
+  }
   return {
     piece: square.classList[0],
     color: square.classList[1]
   };
 }
 /**
- * Updates current piece global variable. Pass nothing or falsy values to empty it.
- * @param {String} piece Piece
- * @param {String} color Color
- */
-function updateCurrent(piece, color) {
-  if (!piece || !color) {
-    current.piece = '';
-    current.color = '';
-  }
-  current.piece = piece;
-  current.color = color;
-}
-/**
  * Updates a square
  * @param {HTMLElement} square The square's element
- * @param {String} piece Piece class of the square's element, blank to empty out the element
- * @param {String} color Piece class of the square's element, blank to empty out the element
+ * @param {String} piece Piece class of the square's element, blank to empty out the square
+ * @param {String} color Color class of the square's element, blank to empty out the square
  */
 function updateSquare(square, piece, color) {
-  // wipe classes regardless
+  // wipe classes
   for (const cls of [...square.classList]) { 
     square.classList.remove(cls);
   }
@@ -74,6 +63,27 @@ function updateSquare(square, piece, color) {
   square.textContent = pieces[piece];
   square.classList.add(piece, color);
 }
+/**
+ * Set a square as selected
+ * @param {HTMLElement} square Square to select
+ */
+function setSelected(square) {
+  square.classList.add('selected');
+}
+/**
+ * Clears selected piece
+ * @param {Boolean} unselect Truthy to only unselect the selected piece without removing
+ */
+function clearSelected(unselect) {
+  const selected = document.querySelector('.selected');
+  if (!selected) {
+    return;
+  }
+  selected.classList.remove('selected');
+  if (!unselect) {
+    updateSquare(selected);
+  }
+}
 
 board.addEventListener('click', (ev) => {
   if (!ev.target.closest('td')) {
@@ -81,26 +91,22 @@ board.addEventListener('click', (ev) => {
   }
 
   const square = ev.target;
-  const selected = document.querySelector('.selected');
+  const selected = getPiece(document.querySelector('.selected'));
   const clicked = getPiece(square);
 
   if (selected === square) {
-    updateCurrent();
-    selected.classList.remove('selected');
+    clearSelected(true);
     return;
   }
 
-  if (current.color) {
-    if (clicked.color && clicked.color === current.color) {
-      updateCurrent();
-      selected.classList.remove('selected');
+  if (selected.piece) {
+    if (clicked.color === selected.color) { //eat same color prevention
+      clearSelected(true);
       return;
     }
-    updateSquare(square, current.piece, current.color);
-    updateCurrent();
-    updateSquare(selected);
-  } else if (clicked.color) {
-    updateCurrent(clicked.piece, clicked.color);
-    square.classList.add('selected');
+    updateSquare(square, selected.piece, selected.color);
+    clearSelected();
+  } else if (clicked.piece) {
+    setSelected(square);
   }
 });
