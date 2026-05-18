@@ -20,17 +20,14 @@ pieceRow.forEach((tr, i) => {
   const rowOfPieces = ['rook', 'knight', 'bishop', 'queen', 'king', 'bishop', 'knight', 'rook']
   const colSquares = [...tr.children].splice(1); // remove th
   colSquares.forEach((td, j) => {
-    td.textContent = pieces[rowOfPieces[j]];
-    td.classList.add(rowOfPieces[j]);
-    td.classList.add(i ? 'white' : 'black'); // first tr.pieces ? 'white' : 'black'
+    updateSquare(td, rowOfPieces[j], i ? 'white' : 'black') // 0: first = black, 1: last = white
   });
   tr.classList.remove(i ? 'white' : 'black');
 });
 pawnRow.forEach((tr, i) => {
   const colSquares = [...tr.children].splice(1);
   colSquares.forEach(td => {
-    td.textContent = pieces.pawn;
-    td.classList.add('pawn', i ? 'white' : 'black');
+    updateSquare(td, 'pawn', i ? 'white' : 'black');
   });
   tr.classList.remove(i ? 'white' : 'black');
 });
@@ -63,12 +60,11 @@ function updateCurrent(piece, color) {
  * Updates a square
  * @param {HTMLElement} square The square's element
  * @param {String} piece Piece class of the square's element, blank to empty out the element
- * @param {*} color Piece class of the square's element, blank to empty out the element
+ * @param {String} color Piece class of the square's element, blank to empty out the element
  */
 function updateSquare(square, piece, color) {
-  const squareClsList = [...square.classList];
   // wipe classes regardless
-  for (const cls of squareClsList) { 
+  for (const cls of [...square.classList]) { 
     square.classList.remove(cls);
   }
   if (!piece || !color) {
@@ -88,7 +84,7 @@ board.addEventListener('click', (ev) => {
   const selected = document.querySelector('.selected');
   const clicked = getPiece(square);
 
-  if (selected && square.classList.contains('selected')) {
+  if (selected === square) {
     updateCurrent();
     selected.classList.remove('selected');
     return;
