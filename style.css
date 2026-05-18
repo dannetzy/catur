@@ -16,13 +16,13 @@ td {
 th {
   padding: 4px;
 }
-tr:nth-child(odd) td:nth-child(even) {
-  background-color: black;
-  color: white;
-}
+tr:nth-child(odd) td:nth-child(even),
 tr:nth-child(even) td:nth-child(odd) {
-  background-color: black;
-  color: white;
+  background-color: saddlebrown;
+}
+tr:nth-child(odd) td:nth-child(odd),
+tr:nth-child(even) td:nth-child(even) {
+  background-color: burlywood;
 }
 body {
   display: flex;
@@ -34,4 +34,8 @@ body {
 }
 mark.cyan {
   background-color: cyan;
+}
+caption {
+  font-weight: bold;
+  font-size: large;
 }
