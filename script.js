@@ -13,7 +13,7 @@ const pieceRow = document.querySelectorAll('.pieces');
 const pawnRow = document.querySelectorAll('.pawns');
 
 pieceRow.forEach((tr, i) => {
-  const rowOfPieces = ['rook', 'knight', 'bishop', 'queen', 'king', 'bishop', 'knight', 'rook']
+  const rowOfPieces = ['rook', 'knight', 'bishop', 'queen', 'king', 'bishop', 'knight', 'rook'];
   const colSquares = [...tr.children].splice(1); // remove th
   colSquares.forEach((td, j) => {
     updateSquare(td, rowOfPieces[j], i ? 'white' : 'black') // 0: first = black, 1: last = white
