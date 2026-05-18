@@ -18,20 +18,18 @@ pieceRow.forEach((tr, i) => {
   colSquares.forEach((td, j) => {
     updateSquare(td, rowOfPieces[j], i ? 'white' : 'black') // 0: first = black, 1: last = white
   });
-  tr.classList.remove(i ? 'white' : 'black');
 });
 pawnRow.forEach((tr, i) => {
   const colSquares = [...tr.children].splice(1);
   colSquares.forEach(td => {
     updateSquare(td, 'pawn', i ? 'white' : 'black');
   });
-  tr.classList.remove(i ? 'white' : 'black');
 });
 
 /**
  * Get piece info from a square
  * @param {HTMLElement} square The square to get
- * @returns Object containing the piece's info, undefined for blank
+ * @returns Object containing the piece's info
  */
 function getPiece(square) {
   if (!(square instanceof HTMLElement)) {
@@ -93,11 +91,6 @@ board.addEventListener('click', (ev) => {
   const square = ev.target;
   const selected = getPiece(document.querySelector('.selected'));
   const clicked = getPiece(square);
-
-  if (selected === square) {
-    clearSelected(true);
-    return;
-  }
 
   if (selected.piece) {
     if (clicked.color === selected.color) { //eat same color prevention
