@@ -43,13 +43,14 @@ tbody .white {
   color: white;
   -webkit-text-stroke: 1px black;
 }
+.turn-td {
+  border: 1px solid black;
+}
 .turn-td.black {
   color: white;
   background-color: black;
-  border: 1px solid black;
 }
 .turn-td.white {
   color: black;
   background-color: white;
-  border: 1px solid white;
 }

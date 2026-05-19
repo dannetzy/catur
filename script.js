@@ -64,18 +64,21 @@ const game = {
       this.updateSquare(selected);
     }
   },
-  updateTurn(color, initColor) {
-    if (color === 'init' && initColor) {
-      this.turn = initColor;
-      turnTd.classList.add(initColor);
-      turnText.textContent = initColor;
-      return;
-    }
+  /**
+   * Updates turn according to the last player
+   * @param {String} color Color of the last player
+   */
+  updateTurn(color) {
     this.turn = color === 'white' ? 'black' : 'white';
     turnTd.classList.remove(color);
     turnTd.classList.add(this.turn);
-    turnText.textContent = this.turn;
+    turnText.textContent = this.turn.slice(0, 1).toUpperCase() + this.turn.slice(1);
   },
+  /**
+   * Check if it's the player's turn
+   * @param {String} color Color to check
+   * @returns {Boolean}
+   */
   isTurn(color) {
     return color === this.turn;
   }
@@ -102,9 +105,9 @@ pawnRow.forEach((tr, i) => {
 
 const turnTd = document.querySelector('.turn-td');
 const turnText = document.querySelector('.turn-text');
-const firstPlayer = 'black';
+const secondPlayer = 'black';
 
-game.updateTurn('init', firstPlayer);
+game.updateTurn(secondPlayer);
 
 board.addEventListener('click', (ev) => {
   if (!ev.target.closest('td')) {
