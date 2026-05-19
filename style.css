@@ -1,3 +1,8 @@
+@font-face {
+  font-family: Chess Merida;
+  src: url(font/chessmerida-webfont.ttf);
+}
+
 table { 
   border-collapse: collapse;
 }
@@ -54,8 +59,9 @@ tbody .white {
   color: black;
   background-color: white;
 }
-tbody td.highlight {
+tbody td {
   position: relative;
+  font-family: Chess Merida;
 }
 tbody td.highlight::before {
   position: absolute;

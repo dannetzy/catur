@@ -1,11 +1,17 @@
 const game = {
   pieces: {
-    king: '♚',
-    queen: '♛',
-    rook: '♜',
-    bishop: '♝',
-    knight: '♞',
-    pawn: '♟'
+    // king: '♚',
+    // queen: '♛',
+    // rook: '♜',
+    // bishop: '♝',
+    // knight: '♞',
+    // pawn: '♟'
+    king: 'l',
+    queen: 'w',
+    rook: 't',
+    bishop: 'v',
+    knight: 'm',
+    pawn: 'o'
   },
   color: {
     black: 'black',
@@ -15,32 +21,32 @@ const game = {
   /**
    * Get piece info from a square
    * @param {HTMLElement} square The square to get
-   * @returns Object containing the piece's info
+   * @returns {Object} Object containing the piece's info
    */
   getPiece(square) {
     if (!(square instanceof HTMLElement)) {
       return {
         piece: '',
-        color: ''
+        color: '',
+        square: null
       };
     }
     return {
-      piece: [...square.classList].filter(cls => {
+      piece: [...square.classList].find(cls => {
         for (const piece in this.pieces) {
           if (cls === piece) {
             return cls;
           }
         }
-        return '';
-      })[0],
-      color: [...square.classList].filter(cls => {
+      }),
+      color: [...square.classList].find(cls => {
         for (const col in this.color) {
           if (cls === col) {
             return cls;
           }
         }
-        return '';
-      })[0]
+      }),
+      square
     };
   },
   /**
@@ -101,24 +107,48 @@ const game = {
    */
   isTurn(color) {
     return color === this.turn;
-  }
+  },
+  getPosition(square) {
+    if (!(square instanceof HTMLElement)) {
+      return;
+    }
+
+    const getCoord = (element, prefix) => {
+      return [...element.classList].find(cls => cls.startsWith(prefix))?.replace(prefix, '');
+    }
+    return { 
+      col: getCoord(square, 'col-'),
+      row: getCoord(square.parentElement, 'row-'),
+    };
+  },
 }
 
 //initialize board
 const board = document.querySelector('.board');
+
+const squareRow = document.querySelectorAll('tbody tr');
+squareRow.forEach((tr, i) => {
+  tr.classList.add('row-' + Math.abs(i - 8));
+  const squareCol = [...tr.children].splice(1);
+  squareCol.forEach((td, j) => {
+    const alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+    td.classList.add('col-' + alphabet[j]);
+  })
+})
+
 const pieceRow = document.querySelectorAll('.pieces');
 const pawnRow = document.querySelectorAll('.pawns');
 
 pieceRow.forEach((tr, i) => {
   const rowOfPieces = ['rook', 'knight', 'bishop', 'queen', 'king', 'bishop', 'knight', 'rook'];
-  const colSquares = [...tr.children].splice(1); // remove th
-  colSquares.forEach((td, j) => {
+  const pieceCol = [...tr.children].splice(1); // remove th
+  pieceCol.forEach((td, j) => {
     game.updateSquare(td, rowOfPieces[j], i ? game.color.white : game.color.black) // 0: first = black, 1: last = white
   });
 });
 pawnRow.forEach((tr, i) => {
-  const colSquares = [...tr.children].splice(1);
-  colSquares.forEach(td => {
+  const pawnCol = [...tr.children].splice(1);
+  pawnCol.forEach(td => {
     game.updateSquare(td, 'pawn', i ? game.color.white : game.color.black);
   });
 });
@@ -146,7 +176,7 @@ board.addEventListener('click', (ev) => {
     if (game.isTurn(selected.color)) {
       game.updateSquare(square, selected.piece, selected.color);
       game.clearSelected();
-      game.updateTurn(selected.color)
+      game.updateTurn(selected.color);
     } else {
       alert('not your turn');
       game.clearSelected(true);
