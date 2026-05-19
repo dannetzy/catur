@@ -123,6 +123,21 @@ const game = {
   },
 }
 
+// sound effects
+const sfx = {
+  move: new Audio('sfx/move.mp3')
+}
+
+Object.values(sfx).forEach(sound => {
+  sound.preload = 'auto';
+  sound.load();
+});
+
+sfx.play = sfx => {
+  const clone = sfx.cloneNode();
+  clone.play();
+}
+
 //initialize board
 const board = document.querySelector('.board');
 
@@ -177,9 +192,10 @@ board.addEventListener('click', (ev) => {
       game.updateSquare(square, selected.piece, selected.color);
       game.clearSelected();
       game.updateTurn(selected.color);
+      sfx.play(sfx.move);
     } else {
       alert('not your turn');
-      game.clearSelected(true);
+      game.clearSelected(true);  
       return;
     }
   } else if (clicked.piece) {
