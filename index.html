@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>HTML Table Chess</title>
   <link rel="stylesheet" href="style.css">
-  <script src="script.js" defer></script>
+  <script src="script-obj.js" defer></script>
 </head>
 <body>
   <table>
@@ -113,6 +113,12 @@
         <td></td>
       </tr>
     </tbody>
+    <tfoot>
+      <tr>
+        <td></td>
+        <td colspan="8" class="turn-td"><span class="turn-text">White</span>'s turn</td>
+      </tr>
+    </tfoot>
   </table>
   <aside>
     <h3>How to play:</h3>
@@ -125,7 +131,7 @@
     <ul>
       <li><s>Differentiate black and white pieces</s> (done)</li>
       <li>Basic system to highlight possible moves and reject invalid moves</li>
-      <li>Turn system</li>
+      <li><s>Turn system</s> (done)</li>
     </ul>
     <hr>
     <p>Made by DanneTzy.</p>
