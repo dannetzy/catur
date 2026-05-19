@@ -7,6 +7,10 @@ const game = {
     knight: '♞',
     pawn: '♟'
   },
+  color: {
+    black: 'black',
+    white: 'white'
+  },
   turn: '',
   /**
    * Get piece info from a square
@@ -21,8 +25,22 @@ const game = {
       };
     }
     return {
-      piece: square.classList[0],
-      color: square.classList[1]
+      piece: [...square.classList].filter(cls => {
+        for (const piece in this.pieces) {
+          if (cls === piece) {
+            return cls;
+          }
+        }
+        return '';
+      })[0],
+      color: [...square.classList].filter(cls => {
+        for (const col in this.color) {
+          if (cls === col) {
+            return cls;
+          }
+        }
+        return '';
+      })[0]
     };
   },
   /**
@@ -33,8 +51,10 @@ const game = {
    */
   updateSquare(square, piece, color) {
     // wipe classes
-    for (const cls of [...square.classList]) { 
-      square.classList.remove(cls);
+    for (const obj of [this.color, this.pieces]) { 
+      for (const key in obj) {
+        square.classList.remove(key);
+      }
     }
     if (!piece || !color) {
       square.textContent = '';
@@ -69,7 +89,7 @@ const game = {
    * @param {String} color Color of the last player
    */
   updateTurn(color) {
-    this.turn = color === 'white' ? 'black' : 'white';
+    this.turn = color === game.color.white ? game.color.black : game.color.white;
     turnTd.classList.remove(color);
     turnTd.classList.add(this.turn);
     turnText.textContent = this.turn.slice(0, 1).toUpperCase() + this.turn.slice(1);
@@ -93,19 +113,19 @@ pieceRow.forEach((tr, i) => {
   const rowOfPieces = ['rook', 'knight', 'bishop', 'queen', 'king', 'bishop', 'knight', 'rook'];
   const colSquares = [...tr.children].splice(1); // remove th
   colSquares.forEach((td, j) => {
-    game.updateSquare(td, rowOfPieces[j], i ? 'white' : 'black') // 0: first = black, 1: last = white
+    game.updateSquare(td, rowOfPieces[j], i ? game.color.white : game.color.black) // 0: first = black, 1: last = white
   });
 });
 pawnRow.forEach((tr, i) => {
   const colSquares = [...tr.children].splice(1);
   colSquares.forEach(td => {
-    game.updateSquare(td, 'pawn', i ? 'white' : 'black');
+    game.updateSquare(td, 'pawn', i ? game.color.white : game.color.black);
   });
 });
 
 const turnTd = document.querySelector('.turn-td');
 const turnText = document.querySelector('.turn-text');
-const secondPlayer = 'black';
+const secondPlayer = game.color.black;
 
 game.updateTurn(secondPlayer);
 

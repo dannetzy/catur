@@ -54,3 +54,13 @@ tbody .white {
   color: black;
   background-color: white;
 }
+tbody td.highlight {
+  position: relative;
+}
+tbody td.highlight::before {
+  position: absolute;
+  top: 14%;
+  left: 41%;
+  content: "•";
+  color: rgb(0 0 0 / 50%);
+}
